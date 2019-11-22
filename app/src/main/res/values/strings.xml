@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MyKotlinSample</string>
+    <string name="welcome_msg">Welcome to Coffee shop...</string>
+    <string name="click_here">Click Me</string>
+    <string name="register_text">Register</string>
+    <string name="login">Login</string>
+    <string name="forgot">Forgot password</string>
+    <string name="login_text">Login</string>
+    <string name="welcome_back_text">Welcome back</string>
+    <string name="signin_to_continue">Sing in to continue</string>
+    <string name="forgot_text"> &#160; &#160; &#160;Dont worry. Please enter your email id to change your password</string>
+    <string name="send_text">Send</string>
+</resources>
