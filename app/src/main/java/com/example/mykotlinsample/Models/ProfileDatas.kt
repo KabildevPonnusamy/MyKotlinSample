@@ -21,4 +21,11 @@ class ProfileDatas  {
         this.created_date = created_date
                 }
 
-        }
+    constructor(userView: String, passView: String, emailView: String, mobileView: String) {
+        this.email = email
+        this.password = password
+        this.name = name
+        this.mobile = mobile
+                }
+
+}

@@ -1,22 +1,44 @@
 package com.example.mykotlinsample.Activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mykotlinsample.R
 
 class SplashActivity : AppCompatActivity() {
 
-//    private val SPLASH_TIME_OUT:Long=3000 // 3 sec
+    private val sharedPrefFile = "coffee_preference"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash)
         supportActionBar?.hide()
 
-        val app_logo = findViewById<ImageView>(R.id.app_logo);
+        var sharedPref: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        var editor: SharedPreferences.Editor = sharedPref.edit()
+
+        var email_str = sharedPref.getString("user_email", "")
+        if(!email_str.equals("")) {
+            Toast.makeText(applicationContext, "Already Logged in", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({
+                intent = Intent(applicationContext, LoginActivity::class.java)
+                startActivity(intent)
+
+                overridePendingTransition(
+                    R.anim.slide_up,
+                    R.anim.no_animation
+                );
+
+                }, 1000)
+
+            }
 
         /*Handler().postDelayed({
             intent = Intent(applicationContext, LoginActivity::class.java)
@@ -32,6 +54,5 @@ class SplashActivity : AppCompatActivity() {
                 R.anim.no_animation
                     );
                 }
-
+            }
         }
-}

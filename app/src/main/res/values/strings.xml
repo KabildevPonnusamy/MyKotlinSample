@@ -10,4 +10,9 @@
     <string name="signin_to_continue">Sing in to continue</string>
     <string name="forgot_text"> &#160; &#160; &#160;Dont worry. Please enter your email id to change your password</string>
     <string name="send_text">Send</string>
+    <string name="register_success">Registration Successfully</string>
+    <string name="welcome_reg">Welcome to coffee shop.</string>
+    <string name="login_success">Login successful</string>
+    <string name="welcome_login_msg">Welcome back foodie, Enjoy your snacks!</string>
+    <string name="forgot_welcome">We got you..!</string>
 </resources>

@@ -18,12 +18,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
         private val COL_PASS = "password"
         private val COL_NAME = "name"
         private val COL_MOBILE = "mobile"
-        private val COL_CREATED_DATE = "created_date"
+//        private val COL_CREATED_DATE = "created_date"
             }
 
-    val CREATE_PROFILE_TABLE = ("CREATE TABLE $PROFILE_TABLE  ($COL_ID INTERGER PRIMARY KEY " +
-            "AUTO_INCREMENT, $COL_EMAIL TEXT, $COL_PASS TEXT, $COL_NAME TEXT, $COL_MOBILE TEXT, " +
-            "$COL_CREATED_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+    val CREATE_PROFILE_TABLE = ("CREATE TABLE $PROFILE_TABLE ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "$COL_EMAIL TEXT, $COL_PASS TEXT, $COL_NAME TEXT, $COL_MOBILE TEXT)");
 
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.execSQL(CREATE_PROFILE_TABLE)
@@ -35,8 +34,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
 
     fun getMyUser(username: String, password: String): List<ProfileDatas> {
         val myprof = ArrayList<ProfileDatas>()
-        val selectQuery = "SELECT * FROM $PROFILE_TABLE whCOL_$COL_EMAIL = $username and " +
-                "$COL_PASS = $password"
+        val selectQuery = "SELECT * FROM $PROFILE_TABLE where $COL_EMAIL = '$username' and " +
+                "$COL_PASS = '$password'"
         val db = this.writableDatabase
         val cursor = db.rawQuery(selectQuery, null)
         if(cursor.moveToFirst()) {
@@ -47,7 +46,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
                 mydatas.password = cursor.getString(cursor.getColumnIndex(COL_PASS))
                 mydatas.name = cursor.getString(cursor.getColumnIndex(COL_NAME))
                 mydatas.mobile = cursor.getString(cursor.getColumnIndex(COL_MOBILE))
-                mydatas.created_date = cursor.getString(cursor.getColumnIndex(COL_CREATED_DATE))
+//                mydatas.created_date = cursor.getString(cursor.getColumnIndex(COL_CREATED_DATE))
 
                 myprof.add(mydatas)
              } while (cursor.moveToNext())
@@ -55,6 +54,28 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
 
         return myprof
           }
+
+    fun searchBEmail(username: String): List<ProfileDatas> {
+        val myprof = ArrayList<ProfileDatas>()
+        val selectQuery = "SELECT * FROM $PROFILE_TABLE where $COL_EMAIL = '$username' "
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(selectQuery, null)
+        if(cursor.moveToFirst()) {
+            do {
+                val mydatas = ProfileDatas()
+                mydatas.id = cursor.getInt(cursor.getColumnIndex(COL_ID))
+                mydatas.email = cursor.getString(cursor.getColumnIndex(COL_EMAIL))
+                mydatas.password = cursor.getString(cursor.getColumnIndex(COL_PASS))
+                mydatas.name = cursor.getString(cursor.getColumnIndex(COL_NAME))
+                mydatas.mobile = cursor.getString(cursor.getColumnIndex(COL_MOBILE))
+//                mydatas.created_date = cursor.getString(cursor.getColumnIndex(COL_CREATED_DATE))
+
+                myprof.add(mydatas)
+            } while (cursor.moveToNext())
+        }
+
+        return myprof
+    }
 
     //Add User
     val getUser: List<ProfileDatas> get() {
@@ -70,7 +91,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
                 mydatas.password = cursor.getString(cursor.getColumnIndex(COL_PASS))
                 mydatas.name = cursor.getString(cursor.getColumnIndex(COL_NAME))
                 mydatas.mobile = cursor.getString(cursor.getColumnIndex(COL_MOBILE))
-                mydatas.created_date = cursor.getString(cursor.getColumnIndex(COL_CREATED_DATE))
+//                mydatas.created_date = cursor.getString(cursor.getColumnIndex(COL_CREATED_DATE))
 
                 myprof.add(mydatas)
                     } while (cursor.moveToNext())
@@ -78,29 +99,25 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
            return myprof
             }
 
-    fun addUser(profdatas : ProfileDatas) {
+    fun addUser(email: String, password: String, name: String, mobile: String) {
         val db = this.writableDatabase
         val values = ContentValues()
-        values.put(COL_EMAIL, profdatas.id)
-        values.put(COL_PASS, profdatas.password)
-        values.put(COL_NAME, profdatas.name)
-        values.put(COL_MOBILE, profdatas.mobile)
-        values.put(COL_CREATED_DATE, profdatas.created_date)
+        values.put(COL_EMAIL, email)
+        values.put(COL_PASS, password)
+        values.put(COL_NAME, name)
+        values.put(COL_MOBILE, mobile)
+//        values.put(COL_CREATED_DATE, profdatas.created_date)
 
         db.insert(PROFILE_TABLE, null,values)
         db.close()
             }
 
-    fun updateUser(profdatas : ProfileDatas):Int {
+    fun updateUser(email: String, password: String):Int {
         val db = this.writableDatabase
         val values = ContentValues()
-        values.put(COL_EMAIL, profdatas.id)
-        values.put(COL_PASS, profdatas.password)
-        values.put(COL_NAME, profdatas.name)
-        values.put(COL_MOBILE, profdatas.mobile)
-        values.put(COL_CREATED_DATE, profdatas.created_date)
+        values.put(COL_PASS, password)
 
-        return db.update(PROFILE_TABLE, values, "$COL_EMAIL=?", arrayOf(profdatas.email.toString()))
+        return db.update(PROFILE_TABLE, values, "$COL_EMAIL=?", arrayOf(email))
             }
 
     fun deleteUser(profdatas : ProfileDatas) {

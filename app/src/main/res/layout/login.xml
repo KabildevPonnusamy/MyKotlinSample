@@ -16,7 +16,7 @@
         android:background="@color/bgnd_color">
 
         <ImageView
-            android:id="@+id/back_arrow"
+            android:id="@+id/login_back"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/back_arrow"/>
@@ -47,7 +47,7 @@
             android:text="@string/signin_to_continue"
             android:gravity="start"
             android:textStyle="normal"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="15dp"
             android:textColor="@color/black"
