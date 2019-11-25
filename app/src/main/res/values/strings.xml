@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyKotlinSample</string>
+    <string name="app_name">Tasty Cafe</string>
     <string name="welcome_msg">Welcome to Coffee shop...</string>
     <string name="click_here">Click Me</string>
     <string name="register_text">Register</string>
@@ -15,4 +15,6 @@
     <string name="login_success">Login successful</string>
     <string name="welcome_login_msg">Welcome back foodie, Enjoy your snacks!</string>
     <string name="forgot_welcome">We got you..!</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

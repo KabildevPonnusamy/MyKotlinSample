@@ -1,7 +1,8 @@
-package com.example.mykotlinsample.Activities
+package com.example.mykotlinsample.CommonActivities
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -11,13 +12,15 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mykotlinsample.Admin.Activities.Dashboard
+import com.example.mykotlinsample.Users.Activities.DashboardActivity
 import com.example.mykotlinsample.Database.DBHelper
-import com.example.mykotlinsample.Models.ProfileDatas
+import com.example.mykotlinsample.CommonActivities.Models.ProfileDatas
 import com.example.mykotlinsample.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.login.*
 
-class LoginActivity : AppCompatActivity(){
+class LoginActivity : AppCompatActivity() {
 
     internal lateinit var db: DBHelper
     internal var profile_datas:List<ProfileDatas> = ArrayList<ProfileDatas>()
@@ -59,22 +62,35 @@ class LoginActivity : AppCompatActivity(){
                 passwordView.requestFocus()
                 return@setOnClickListener
                         }
+            if (emailstr.equals("admin@admin.com") && passstr.equals("admin")) {
 
-            profile_datas = db.getMyUser(emailstr, passstr)
-            db.close()
-
-            if(profile_datas.size > 0) {
                 editor.putString("user_email", emailstr)
                 editor.putString("user_pass", passstr)
                 editor.apply()
                 editor.commit()
 
-                showSuccessAlert()
+                intent = Intent(this, Dashboard::class.java)
+                startActivity(intent)
+
                     } else {
-                Snackbar.make(it,"Please check your login credentials", Snackbar.LENGTH_LONG).show()
-                return@setOnClickListener
-                    }
-                }
+
+                profile_datas = db.getMyUser(emailstr, passstr)
+                db.close()
+
+                if(profile_datas.size > 0) {
+                    editor.putString("user_email", emailstr)
+                    editor.putString("user_pass", passstr)
+                    editor.apply()
+                    editor.commit()
+
+                    showSuccessAlert()
+                } else {
+                    Snackbar.make(it, "Please check your login credentials", Snackbar.LENGTH_LONG)
+                        .show()
+                    return@setOnClickListener
+                           }
+                        }
+                  }
             }
 
     private fun view_init() {

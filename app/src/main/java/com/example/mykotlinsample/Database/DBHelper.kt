@@ -4,14 +4,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.mykotlinsample.Models.ProfileDatas
+import com.example.mykotlinsample.CommonActivities.Models.ProfileDatas
 
 class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, null, DATABASE_VER) {
     companion object {
         private val DATABASE_VER = 1
         private val DATABASE_NAME = "BAKERY.db"
 
-        //Tables
+        //Profile Tables
         private val PROFILE_TABLE = "Profile"
         private val COL_ID = "id"
         private val COL_EMAIL = "email"
@@ -19,10 +19,15 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
         private val COL_NAME = "name"
         private val COL_MOBILE = "mobile"
 //        private val COL_CREATED_DATE = "created_date"
+
+        //Category Table
+//        private val CATEGORY_TABLE = ""
             }
 
     val CREATE_PROFILE_TABLE = ("CREATE TABLE $PROFILE_TABLE ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "$COL_EMAIL TEXT, $COL_PASS TEXT, $COL_NAME TEXT, $COL_MOBILE TEXT)");
+    val CREATE_CATEGORY_TABLE = ("");
+
 
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.execSQL(CREATE_PROFILE_TABLE)

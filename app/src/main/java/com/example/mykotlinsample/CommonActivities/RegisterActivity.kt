@@ -1,4 +1,4 @@
-package com.example.mykotlinsample.Activities
+package com.example.mykotlinsample.CommonActivities
 
 import android.app.Activity
 import android.content.Context
@@ -6,19 +6,15 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.example.mykotlinsample.Database.DBHelper
-import com.example.mykotlinsample.Models.ProfileDatas
+import com.example.mykotlinsample.CommonActivities.Models.ProfileDatas
 import com.example.mykotlinsample.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.register.*
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class RegisterActivity : AppCompatActivity() {

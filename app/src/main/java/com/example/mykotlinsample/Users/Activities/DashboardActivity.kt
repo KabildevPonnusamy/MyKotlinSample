@@ -1,8 +1,6 @@
-package com.example.mykotlinsample.Activities
+package com.example.mykotlinsample.Users.Activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
 class DashboardActivity : AppCompatActivity() {

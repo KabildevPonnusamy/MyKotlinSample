@@ -11,7 +11,7 @@
         android:theme="@style/Theme.AppCompat">
 
         <activity
-            android:name=".Activities.SplashActivity">
+            android:name=".CommonActivities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,22 +20,30 @@
         </activity>
 
         <activity
-            android:name=".Activities.RegisterActivity"
+            android:name=".CommonActivities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
         <activity
-            android:name=".Activities.ForgotActivity"
+            android:name=".CommonActivities.ForgotActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".CommonActivities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
         <activity
-            android:name=".Activities.DashboardActivity"
+            android:name="com.example.mykotlinsample.Users.Activities.DashboardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat"/>
+
+
+        <!-- Admin Activities -->
+
+        <activity
+            android:name=".Admin.Activities.Dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
