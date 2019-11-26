@@ -1,4 +1,4 @@
-package com.example.mykotlinsample.Admin.Fragments
+package com.example.mykotlinsample.Admin.AdminFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

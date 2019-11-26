@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mykotlinsample">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +14,7 @@
         android:theme="@style/Theme.AppCompat">
 
         <activity
-            android:name=".CommonActivities.SplashActivity">
+            android:name=".Common.CommonActivities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,22 +23,22 @@
         </activity>
 
         <activity
-            android:name=".CommonActivities.RegisterActivity"
+            android:name=".Common.CommonActivities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
         <activity
-            android:name=".CommonActivities.ForgotActivity"
+            android:name=".Common.CommonActivities.ForgotActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
         <activity
-            android:name=".CommonActivities.LoginActivity"
+            android:name=".Common.CommonActivities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
         <activity
-            android:name="com.example.mykotlinsample.Users.Activities.DashboardActivity"
+            android:name="com.example.mykotlinsample.Users.UserActivities.DashboardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
@@ -43,7 +46,7 @@
         <!-- Admin Activities -->
 
         <activity
-            android:name=".Admin.Activities.Dashboard"
+            android:name=".Admin.AdminActivities.Dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 

@@ -1,4 +1,4 @@
-package com.example.mykotlinsample.CommonActivities
+package com.example.mykotlinsample.Common.CommonActivities
 
 import android.app.Activity
 import android.content.Context
@@ -12,10 +12,9 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mykotlinsample.Admin.Activities.Dashboard
-import com.example.mykotlinsample.Users.Activities.DashboardActivity
+import com.example.mykotlinsample.Admin.AdminActivities.Dashboard
 import com.example.mykotlinsample.Database.DBHelper
-import com.example.mykotlinsample.CommonActivities.Models.ProfileDatas
+import com.example.mykotlinsample.Common.CommonModels.ProfileDatas
 import com.example.mykotlinsample.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.login.*

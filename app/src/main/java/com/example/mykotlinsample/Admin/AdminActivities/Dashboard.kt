@@ -1,14 +1,13 @@
-package com.example.mykotlinsample.Admin.Activities
+package com.example.mykotlinsample.Admin.AdminActivities
 
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import com.example.mykotlinsample.Admin.Fragments.FirstFragment
-import com.example.mykotlinsample.Admin.Fragments.SecondFragment
+import com.example.mykotlinsample.Admin.AdminFragments.CategoryFragment
+import com.example.mykotlinsample.Admin.AdminFragments.SecondFragment
 import com.example.mykotlinsample.R
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.admin_dashboard.*
@@ -40,7 +39,7 @@ class Dashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         val fragment = when(id) {
 
             R.id.action_cut -> {
-                FirstFragment()
+                CategoryFragment()
                     }
 
             R.id.action_copy -> {
@@ -48,7 +47,7 @@ class Dashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
                     }
 
             else -> {
-                FirstFragment()
+                CategoryFragment()
                    }
 
                 }

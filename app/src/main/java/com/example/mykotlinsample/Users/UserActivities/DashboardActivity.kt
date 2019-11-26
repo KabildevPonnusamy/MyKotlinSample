@@ -1,4 +1,4 @@
-package com.example.mykotlinsample.Users.Activities
+package com.example.mykotlinsample.Users.UserActivities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

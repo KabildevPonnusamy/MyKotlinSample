@@ -1,4 +1,4 @@
-package com.example.mykotlinsample.CommonActivities
+package com.example.mykotlinsample.Common.CommonActivities
 
 import android.content.Context
 import android.content.Intent

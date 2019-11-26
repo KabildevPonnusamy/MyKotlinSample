@@ -1,4 +1,4 @@
-package com.example.mykotlinsample.CommonActivities.Models
+package com.example.mykotlinsample.Common.CommonModels
 
 class ProfileDatas  {
 
