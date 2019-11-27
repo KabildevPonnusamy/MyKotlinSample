@@ -1,8 +1,11 @@
 package com.example.mykotlinsample.Admin.AdminActivities
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -11,14 +14,19 @@ import com.example.mykotlinsample.Admin.AdminFragments.SecondFragment
 import com.example.mykotlinsample.R
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.admin_dashboard.*
-import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.admin_appbarmain.*
 
 class Dashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private val sharedPrefFile = "coffee_preference"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_dashboard)
         supportActionBar ?.hide()
+
+        var sharedPref: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        var editor: SharedPreferences.Editor = sharedPref.edit()
 
         val toggle = ActionBarDrawerToggle(this,  drawer_layout, toolbar,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -33,16 +41,27 @@ class Dashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         toggle.syncState()
         navigationView.setNavigationItemSelectedListener(this)
         displayScreen(-1)
-                }
+
+        val logout = findViewById<ImageView>(R.id.logout)
+        logout.setOnClickListener {
+            editor.clear()
+            editor.commit()
+            finish()
+               }
+           }
 
     fun displayScreen(id: Int) {
         val fragment = when(id) {
 
-            R.id.action_cut -> {
+            R.id.action_category -> {
                 CategoryFragment()
                     }
 
-            R.id.action_copy -> {
+            R.id.action_ongoing -> {
+                SecondFragment()
+                    }
+
+            R.id.action_order_is -> {
                 SecondFragment()
                     }
 

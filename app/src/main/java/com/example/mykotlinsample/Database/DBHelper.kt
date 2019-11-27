@@ -90,7 +90,6 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
                 myprof.add(mydatas)
                 } while (cursor.moveToNext())
             }
-
         return myprof
         }
 

@@ -21,11 +21,22 @@
                 android:layout_height="wrap_content"
                 android:text="Welcome Admin"
                 android:gravity="center"
+                android:layout_centerInParent="true"
                 android:textStyle="bold"
+                android:layout_toLeftOf="@+id/logout"
                 android:textColor="@color/white"
-                android:layout_marginRight="20dp"
                 android:fontFamily="@font/firefans_regular"
                 android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/logout"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_logout"
+                android:tint="@color/white"
+                android:padding="15dp"/>
 
         </RelativeLayout>
 

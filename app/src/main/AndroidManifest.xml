@@ -50,6 +50,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
+        <activity
+            android:name=".Admin.AdminActivities.Admin_Add_Category"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat"/>
+
 
     </application>
 
