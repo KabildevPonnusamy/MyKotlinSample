@@ -70,6 +70,10 @@ class LoginActivity : AppCompatActivity() {
 
                 intent = Intent(this, Dashboard::class.java)
                 startActivity(intent)
+                overridePendingTransition(
+                    R.anim.slide_up,
+                    R.anim.no_animation
+                            );
 
                     } else {
 

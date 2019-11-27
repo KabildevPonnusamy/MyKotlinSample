@@ -28,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.register)
         supportActionBar?.hide()
 
-        db = DBHelper(this)  // 668561
+        db = DBHelper(this)
 
         val usernameView = findViewById<EditText>(R.id.username)
         val passwordView = findViewById<EditText>(R.id.password)

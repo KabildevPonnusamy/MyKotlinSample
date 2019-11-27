@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mykotlinsample.Admin.AdminActivities.Admin_Add_Category
 import com.example.mykotlinsample.Admin.AdminAdapters.CategoryAdapter
 import com.example.mykotlinsample.Admin.AdminModels.CategoryList
@@ -27,16 +27,16 @@ class CategoryFragment : Fragment() {
         val view : View = inflater?.inflate(R.layout.admin_fragcategory, null)
         db = DBHelper(requireContext())
 
+        val icon_add = view.findViewById<ImageView>(R.id.icon_add)
+        val caterecycle = view.findViewById<RecyclerView>(R.id.caterecycle)
         get_categories()
-
-        val addIcon = view.findViewById<ImageView>(R.id.icon_add)
-        addIcon.setOnClickListener {
-            val intent = Intent(activity, Admin_Add_Category::class.java)
-            startActivity(intent)
-            activity!!.overridePendingTransition(
+        icon_add.setOnClickListener {
+            activity!!.intent = Intent(activity, Admin_Add_Category::class.java)
+            startActivity(activity!!.intent)
+            requireActivity().overridePendingTransition(
                 R.anim.slide_up,
                 R.anim.no_animation
-            );
+                    );
                 }
 
         return view
@@ -48,8 +48,8 @@ class CategoryFragment : Fragment() {
 
         if(categorylist != null) {
             if (categorylist.size > 0) {
-                categoryList.layoutManager = GridLayoutManager(activity, 2)
-                categoryList.adapter = CategoryAdapter(requireContext(), categorylist)
+                caterecycle.layoutManager = GridLayoutManager(activity, 2)
+                caterecycle.adapter = CategoryAdapter(requireContext(), categorylist)
                     } else {
 
                        }
