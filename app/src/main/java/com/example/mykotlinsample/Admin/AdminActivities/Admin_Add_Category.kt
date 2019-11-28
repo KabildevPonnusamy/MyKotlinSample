@@ -1,5 +1,7 @@
 package com.example.mykotlinsample.Admin.AdminActivities
 
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -35,8 +37,9 @@ import java.util.jar.Manifest
 
 class Admin_Add_Category : AppCompatActivity() {
 
-    var str_filepath : String = ""
+
     internal lateinit var db: DBHelper
+    private var mediaPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +77,7 @@ class Admin_Add_Category : AppCompatActivity() {
         }
         create_cate_btn.setOnClickListener{
             var vatenameStr: String = catename.text.trim().toString()
-            if(str_filepath.trim() == "") {
+            if(mediaPath!!.trim() == "") {
                 Snackbar.make(it, "Please select an image", Snackbar.LENGTH_LONG)
                     .show()
                 return@setOnClickListener
@@ -89,8 +92,11 @@ class Admin_Add_Category : AppCompatActivity() {
             val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
             val currentDate = sdf.format(Date())
 
-            db.addCategory(vatenameStr, str_filepath, "1", currentDate)
+            db.addCategory(vatenameStr, mediaPath!!, "1", currentDate)
             db.close()
+
+            setResult(1)
+            finish()
                 }
              }
 
@@ -128,14 +134,14 @@ class Admin_Add_Category : AppCompatActivity() {
                         }
                     }
                }
-
+/*
     fun saveImage(myBitmap: Bitmap):String {
         val bytes = ByteArrayOutputStream()
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
         val wallpaperDirectory = File(
             (Environment.getExternalStorageDirectory()).toString() + IMAGE_DIRECTORY)
         // have the object build the directory structure, if needed.
-        Log.d("fee",wallpaperDirectory.toString())
+        Log.e("sample",wallpaperDirectory.toString())
         if (!wallpaperDirectory.exists())
         {
             wallpaperDirectory.mkdirs()
@@ -156,6 +162,7 @@ class Admin_Add_Category : AppCompatActivity() {
             val bitmap:Bitmap = BitmapFactory.decodeFile(f.absolutePath)
             added_image!!.setImageBitmap(bitmap)
             str_filepath = f.absolutePath
+            Log.e("sample", "Path: " + str_filepath)
 
             return f.getAbsolutePath()
                 }
@@ -164,27 +171,35 @@ class Admin_Add_Category : AppCompatActivity() {
                 }
 
         return ""
-        }
+           }
+*/
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == IMAGE_PICK_CODE)
         {
             if (data != null)
             {
                 val contentURI = data!!.data
-                try
-                {
+                val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+                val cursor = contentResolver.query(contentURI!!, filePathColumn, null,
+                            null, null)
+                assert(cursor != null)
+                cursor!!.moveToFirst()
+
+                val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+                mediaPath = cursor.getString(columnIndex)
+
+                added_image.setImageBitmap(BitmapFactory.decodeFile(mediaPath))
+                cursor.close()
+                Log.e("sample", "Path: " + mediaPath)
+
+                /*try {
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
                     val path = saveImage(bitmap)
-//                    Toast.makeText(this, "Image Saved!", Toast.LENGTH_SHORT).show()
-//                    added_image!!.setImageBitmap(bitmap)
-
-                }
-                catch (e: IOException) {
+                            } catch (e: IOException) {
                     e.printStackTrace()
                     Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show()
-                            }
+                            }*/
                         }
                     }
                 }

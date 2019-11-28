@@ -96,7 +96,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
     //Get All Category
     fun getCategories():List<CategoryList> {
         val mycates = ArrayList<CategoryList>()
-        val selectQuery = "SELECT * FROM $CATEGORY_TABLE"
+        val selectQuery = "SELECT * FROM $CATEGORY_TABLE where $CATE_SHOW_STATUS = '1'"
         val db = this.writableDatabase
         val cursor = db.rawQuery(selectQuery, null)
         if(cursor.moveToFirst()) {
@@ -112,6 +112,26 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
               }
         return mycates
             }
+
+    //Get particular category details
+    fun getthisCategories(cate_id: String):List<CategoryList> {
+        val mycates = ArrayList<CategoryList>()
+        val selectQuery = "SELECT * FROM $CATEGORY_TABLE where $CATE_SHOW_STATUS = '1' and $CATE_ID = $cate_id"
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(selectQuery, null)
+        if(cursor.moveToFirst()) {
+            do {
+                val mydatas = CategoryList()
+                mydatas.cate_id = cursor.getInt(cursor.getColumnIndex(CATE_ID))
+                mydatas.cate_name = cursor.getString(cursor.getColumnIndex(CATE_NAME))
+                mydatas.cate_img = cursor.getString(cursor.getColumnIndex(CATE_IMAGE))
+                mydatas.cate_show_status = cursor.getString(cursor.getColumnIndex(CATE_SHOW_STATUS))
+                mydatas.cate_created = cursor.getString(cursor.getColumnIndex(CATE_CREATED_DATE))
+                mycates.add(mydatas)
+            } while (cursor.moveToNext())
+        }
+        return mycates
+    }
 
     //Get All Users
     val getUser: List<ProfileDatas> get() {

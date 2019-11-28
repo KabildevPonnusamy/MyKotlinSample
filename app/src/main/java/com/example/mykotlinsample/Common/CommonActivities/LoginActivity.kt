@@ -62,6 +62,9 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
                         }
             if (emailstr.equals("admin@admin.com") && passstr.equals("admin")) {
+                emailView.setText("")
+                passwordView.setText("")
+                emailView.requestFocus()
 
                 editor.putString("user_email", emailstr)
                 editor.putString("user_pass", passstr)
