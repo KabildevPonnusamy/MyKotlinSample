@@ -42,7 +42,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
-
         <!-- Admin Activities -->
 
         <activity
@@ -55,6 +54,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
+        <activity
+            android:name=".Admin.AdminActivities.ItemsList"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat"/>
 
     </application>
 

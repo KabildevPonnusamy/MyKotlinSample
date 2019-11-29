@@ -4,7 +4,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.mykotlinsample.Admin.AdminActivities.ItemsList
 import com.example.mykotlinsample.Admin.AdminModels.CategoryList
+import com.example.mykotlinsample.Admin.AdminModels.ItemDatasList
 import com.example.mykotlinsample.Common.CommonModels.ProfileDatas
 
 class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, null, DATABASE_VER) {
@@ -29,6 +31,16 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
         private val CATE_SHOW_STATUS = "cate_show_status"
         private val CATE_CREATED_DATE = "cate_created_date"
 
+        private val ITEM_TABLE = "Items"
+        private val ITEM_ID = "item_id"
+        private val ITEM_CATE_ID = "item_cate_id"
+        private val ITEM_NAME = "item_name"
+        private val ITEM_IMAGE = "item_image"
+        private val ITEM_PRICE = "item_price"
+        private val ITEM_OFFER_PRICE = "item_offer_price"
+        private val ITEM_SHOWN_STATUS = "item_shown_status"
+        private val ITEM_CREATED_DATE = "item_created_date"
+
             }
 
     val CREATE_PROFILE_TABLE = ("CREATE TABLE $PROFILE_TABLE ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -37,14 +49,20 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
     val CREATE_CATEGORY_TABLE = ("CREATE TABLE $CATEGORY_TABLE ($CATE_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "$CATE_NAME TEXT, $CATE_IMAGE TEXT, $CATE_SHOW_STATUS TEXT, $CATE_CREATED_DATE TEXT) ")
 
+    val CREATE_ITEM_TABLE = ("CREATE TABLE $ITEM_TABLE($ITEM_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "$ITEM_CATE_ID TEXT, $ITEM_NAME TEXT, $ITEM_IMAGE TEXT, $ITEM_PRICE TEXT, $ITEM_OFFER_PRICE TEXT, " +
+            "$ITEM_SHOWN_STATUS TEXT, $ITEM_CREATED_DATE TEXT) ")
+
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.execSQL(CREATE_PROFILE_TABLE)
         db!!.execSQL(CREATE_CATEGORY_TABLE)
+        db!!.execSQL(CREATE_ITEM_TABLE)
                 }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS $PROFILE_TABLE")
         db!!.execSQL("DROP TABLE IF EXISTS $CATEGORY_TABLE")
+        db!!.execSQL("DROP TABLE IF EXISTS $ITEM_TABLE")
                 }
 
     // Get user By Username and Passsword
@@ -205,18 +223,71 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
             }
 
     //Update Category
-    fun updateCategory (cate_name: String, cate_img: String, cate_status:String):Int {
+    fun updateCategory (cate_name: String, cate_img: String, cate_status:String, cate_id: String):Int {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(CATE_NAME, cate_name)
         values.put(CATE_IMAGE, cate_img)
         values.put(CATE_SHOW_STATUS, cate_status)
-        return db.update(CATEGORY_TABLE, values, "$CATE_NAME=? and $CATE_IMAGE=? and " +
-                "$CATE_SHOW_STATUS=?", arrayOf(cate_name, cate_img, cate_status))
+        return db.update(CATEGORY_TABLE, values, "$CATE_ID=?", arrayOf(cate_id))
             }
 
+    /*Add Items*/
+    fun addItems (item_name: String, item_image: String, item_price: String, item_ofr_price: String,
+                  item_status: String, item_created_date: String) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(ITEM_NAME, item_name)
+        values.put(ITEM_IMAGE, item_image)
+        values.put(ITEM_PRICE, item_price)
+        values.put(ITEM_OFFER_PRICE, item_ofr_price)
+        values.put(ITEM_SHOWN_STATUS, item_status)
+        values.put(ITEM_CREATED_DATE, item_created_date)
+        db.insert(ITEM_TABLE, null, values)
+        db.close()
+            }
 
+    /*Update Items */
+    fun updateItems(item_name: String, item_image: String, item_price: String, item_ofr_price: String,
+                     item_status: String, item_id: String): Int {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(ITEM_NAME, item_name)
+        values.put(ITEM_IMAGE, item_image)
+        values.put(ITEM_PRICE, item_price)
+        values.put(ITEM_OFFER_PRICE, item_ofr_price)
+        values.put(ITEM_SHOWN_STATUS, item_status)
+        return db.update(ITEM_TABLE, values, "$ITEM_ID=?", arrayOf(item_id))
+                }
 
+    /*Delete Items */
+    fun deleteItems(item_id: String) {
+        val db = this.writableDatabase
+        db.delete(ITEM_TABLE, "$ITEM_ID=?", arrayOf(item_id))
+        db.close()
+            }
 
+    /*Get Items List*/
+    fun getAllItems():List<ItemDatasList> {
+        val myitems = ArrayList<ItemDatasList>()
+        val selectQuery = "SELECT * FROM $ITEM_TABLE where $CATE_SHOW_STATUS = '1'"
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(selectQuery, null)
+        if(cursor.moveToFirst()) {
+            do {
+                val mydatas = ItemDatasList()
+                mydatas.item_id = cursor.getInt(cursor.getColumnIndex(ITEM_ID))
+                mydatas.cate_id = cursor.getString(cursor.getColumnIndex(ITEM_CATE_ID))
+                mydatas.item_name = cursor.getString(cursor.getColumnIndex(ITEM_NAME))
+                mydatas.item_img = cursor.getString(cursor.getColumnIndex(ITEM_IMAGE))
+                mydatas.item_price = cursor.getString(cursor.getColumnIndex(ITEM_PRICE))
+                mydatas.item_ofr_price = cursor.getString(cursor.getColumnIndex(ITEM_OFFER_PRICE))
+                mydatas.item_shown_status = cursor.getString(cursor.getColumnIndex(ITEM_SHOWN_STATUS))
+                mydatas.item_created_date = cursor.getString(cursor.getColumnIndex(ITEM_CREATED_DATE))
+                myitems.add(mydatas)
+            } while (cursor.moveToNext())
+        }
+        return myitems
+    }
 
 }

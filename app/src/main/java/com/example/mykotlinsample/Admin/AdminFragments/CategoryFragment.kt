@@ -22,7 +22,6 @@ class CategoryFragment : Fragment() {
 
     var categorylist: ArrayList<CategoryList> = ArrayList<CategoryList>()
     internal lateinit var db: DBHelper
-    val adapter: CategoryAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -43,9 +42,8 @@ class CategoryFragment : Fragment() {
                     );
                 }
 
-
         return view
-                }
+           }
 
     private fun get_categories(recyclerView: RecyclerView) {
         categorylist.clear()
