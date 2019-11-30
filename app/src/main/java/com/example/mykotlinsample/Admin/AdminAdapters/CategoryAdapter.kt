@@ -40,7 +40,8 @@ class CategoryAdapter(var context: Context, val catelist: ArrayList<CategoryList
             val cateid : Int = cItems.cate_id
             val intent = Intent (context, ItemsList::class.java)
             context.startActivity(intent)
-
                     }
                 }
-            }
+        
+    }
+
