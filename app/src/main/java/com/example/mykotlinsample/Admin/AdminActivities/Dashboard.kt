@@ -1,14 +1,18 @@
 package com.example.mykotlinsample.Admin.AdminActivities
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.example.mykotlinsample.Admin.AdminFragments.CategoryFragment
 import com.example.mykotlinsample.Admin.AdminFragments.SecondFragment
 import com.example.mykotlinsample.R

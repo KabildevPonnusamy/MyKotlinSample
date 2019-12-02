@@ -19,10 +19,17 @@ class ItemsList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_itemsact)
+        supportActionBar ?.hide()
 
         db = DBHelper(applicationContext)
         val item_recycleView: RecyclerView = findViewById<RecyclerView>(R.id.item_recycle)
         val add_items: ImageView = findViewById<ImageView>(R.id.add_items)
+        val arrow_back: ImageView = findViewById<ImageView>(R.id.arrow_back)
+        arrow_back.setOnClickListener {
+          setResult(-1)
+          finish()
+               }
+
         add_items.setOnClickListener {
 
                     }

@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.mykotlinsample.Admin.AdminActivities.Admin_Add_Category
+import com.example.mykotlinsample.Admin.AdminActivities.ItemsList
 import com.example.mykotlinsample.Admin.AdminAdapters.CategoryAdapter
 import com.example.mykotlinsample.Admin.AdminModels.CategoryList
+import com.example.mykotlinsample.Admin.AdminSupportClasses.RecyclerItemClickListenr
 import com.example.mykotlinsample.Database.DBHelper
 import com.example.mykotlinsample.R
 import kotlinx.android.synthetic.main.admin_fragcategory.*
@@ -22,6 +25,7 @@ class CategoryFragment : Fragment() {
 
     var categorylist: ArrayList<CategoryList> = ArrayList<CategoryList>()
     internal lateinit var db: DBHelper
+    var adapter: CategoryAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,6 +37,35 @@ class CategoryFragment : Fragment() {
         var recyclerView: RecyclerView = view.findViewById(R.id.caterecycle) as RecyclerView
 
         get_categories(recyclerView)
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(dy > 0) {
+                    icon_add.visibility = View.INVISIBLE
+                         } else {
+                    icon_add.visibility = View.VISIBLE
+                        }
+                super.onScrolled(recyclerView, dx, dy)
+                        }
+                    })
+
+        recyclerView.addOnItemTouchListener(RecyclerItemClickListenr(requireActivity(), recyclerView,
+            object : RecyclerItemClickListenr.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+
+                var cateid : Int = categorylist[position].cate_id
+                val intent = Intent (context, ItemsList::class.java)
+                startActivityForResult(intent, 10)
+                requireActivity().overridePendingTransition(
+                    R.anim.slide_up,
+                    R.anim.no_animation
+                            );
+                        }
+            override fun onItemLongClick(view: View?, position: Int) {
+                TODO("do nothing")
+                        }
+                    }))
+
         icon_add.setOnClickListener {
             activity!!.intent = Intent(activity, Admin_Add_Category::class.java)
             startActivityForResult(activity!!.intent, 0)
@@ -52,15 +85,11 @@ class CategoryFragment : Fragment() {
 
         if(categorylist != null) {
             if (categorylist.size > 0) {
-
                 recyclerView.layoutManager = GridLayoutManager(this.context, 2)
-                recyclerView.adapter = CategoryAdapter(requireContext(), categorylist)
-
-                    } else {
-
-                       }
+                adapter = CategoryAdapter(requireContext(), categorylist, requireActivity())
+                           }
+                      }
                   }
-              }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == 0) {

@@ -270,7 +270,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
     /*Get Items List*/
     fun getAllItems():List<ItemDatasList> {
         val myitems = ArrayList<ItemDatasList>()
-        val selectQuery = "SELECT * FROM $ITEM_TABLE where $CATE_SHOW_STATUS = '1'"
+        val selectQuery = "SELECT * FROM $ITEM_TABLE where $ITEM_SHOWN_STATUS = '1'"
         val db = this.writableDatabase
         val cursor = db.rawQuery(selectQuery, null)
         if(cursor.moveToFirst()) {
