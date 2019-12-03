@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -25,7 +26,6 @@ class CategoryFragment : Fragment() {
 
     var categorylist: ArrayList<CategoryList> = ArrayList<CategoryList>()
     internal lateinit var db: DBHelper
-    var adapter: CategoryAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -54,7 +54,15 @@ class CategoryFragment : Fragment() {
             override fun onItemClick(view: View, position: Int) {
 
                 var cateid : Int = categorylist[position].cate_id
+                var catename: String? = categorylist[position].cate_name
+                var catestatus: String? = categorylist[position].cate_show_status
+                var cateimg: String? = categorylist[position].cate_img
+
                 val intent = Intent (context, ItemsList::class.java)
+                intent.putExtra("cateid", cateid)
+                intent.putExtra("catename","" + catename)
+                intent.putExtra("catestatus","" + catestatus)
+                intent.putExtra("cateimage", cateimg)
                 startActivityForResult(intent, 10)
                 requireActivity().overridePendingTransition(
                     R.anim.slide_up,
@@ -62,7 +70,11 @@ class CategoryFragment : Fragment() {
                             );
                         }
             override fun onItemLongClick(view: View?, position: Int) {
-                TODO("do nothing")
+                var cateid : Int = categorylist[position].cate_id
+                var catename: String? = categorylist[position].cate_name
+                Log.e("sample", "LongClick: " + cateid);
+                delete_category(cateid, catename)
+
                         }
                     }))
 
@@ -78,6 +90,26 @@ class CategoryFragment : Fragment() {
         return view
            }
 
+    private fun delete_category(cateid: Int, catename:String?) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete $catename")
+        builder.setMessage("Do you want to delete this cateory?")
+
+        builder.setPositiveButton("Yes"){dialogInterface, which ->
+            dialogInterface.dismiss()
+            db.deleteCategory("" + cateid)
+            db.close()
+            get_categories(caterecycle)
+                }
+        builder.setNegativeButton("No"){dialogInterface, which ->
+            dialogInterface.dismiss()
+                }
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+                }
+
     private fun get_categories(recyclerView: RecyclerView) {
         categorylist.clear()
         categorylist = db.getCategories() as ArrayList<CategoryList>
@@ -86,7 +118,7 @@ class CategoryFragment : Fragment() {
         if(categorylist != null) {
             if (categorylist.size > 0) {
                 recyclerView.layoutManager = GridLayoutManager(this.context, 2)
-                adapter = CategoryAdapter(requireContext(), categorylist, requireActivity())
+                recyclerView.adapter = CategoryAdapter(requireContext(), categorylist)
                            }
                       }
                   }
@@ -94,7 +126,6 @@ class CategoryFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == 0) {
             if(resultCode == 1) {
-                Log.e("sample", "Callback Done");
                 get_categories(caterecycle)
                         }
                     }

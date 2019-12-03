@@ -95,6 +95,8 @@ class Admin_Add_Category : AppCompatActivity() {
             db.addCategory(vatenameStr, mediaPath!!, "1", currentDate)
             db.close()
 
+            Log.e("sample", "added: " + mediaPath);
+
             setResult(1)
             finish()
                 }

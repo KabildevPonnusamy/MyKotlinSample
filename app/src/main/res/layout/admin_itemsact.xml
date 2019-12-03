@@ -25,14 +25,28 @@
                 android:tint="@color/white"
                 android:layout_alignParentLeft="true"/>
 
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:scaleType="centerCrop"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/arrow_back"
+                android:src="@drawable/app_logo"/>
+
             <TextView
+                android:id="@+id/item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/items_list"
                 android:gravity="center"
+                android:singleLine="true"
                 android:textStyle="bold"
+                android:layout_marginRight="20dp"
                 android:layout_centerInParent="true"
-                android:layout_toRightOf="@+id/arrow_back"
+                android:layout_toRightOf="@+id/item_image"
                 android:layout_toLeftOf="@+id/add_items"
                 android:textColor="@color/white"
                 android:fontFamily="@font/firefans_regular"
