@@ -84,6 +84,7 @@ class Admin_Add_Category : AppCompatActivity() {
                     }
 
             if(vatenameStr == null || vatenameStr.trim() == "") {
+                catename.requestFocus()
                 Snackbar.make(it, "Please enter Category name", Snackbar.LENGTH_LONG)
                     .show()
                 return@setOnClickListener
@@ -136,45 +137,6 @@ class Admin_Add_Category : AppCompatActivity() {
                         }
                     }
                }
-/*
-    fun saveImage(myBitmap: Bitmap):String {
-        val bytes = ByteArrayOutputStream()
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-        val wallpaperDirectory = File(
-            (Environment.getExternalStorageDirectory()).toString() + IMAGE_DIRECTORY)
-        // have the object build the directory structure, if needed.
-        Log.e("sample",wallpaperDirectory.toString())
-        if (!wallpaperDirectory.exists())
-        {
-            wallpaperDirectory.mkdirs()
-        }
-
-        try
-        {
-            val f = File(wallpaperDirectory, ((Calendar.getInstance()
-                .getTimeInMillis()).toString() + ".jpg"))
-            f.createNewFile()
-            val fo = FileOutputStream(f)
-            fo.write(bytes.toByteArray())
-            MediaScannerConnection.scanFile(this,
-                arrayOf(f.getPath()),
-                arrayOf("image/jpeg"), null)
-            fo.close()
-
-            val bitmap:Bitmap = BitmapFactory.decodeFile(f.absolutePath)
-            added_image!!.setImageBitmap(bitmap)
-            str_filepath = f.absolutePath
-            Log.e("sample", "Path: " + str_filepath)
-
-            return f.getAbsolutePath()
-                }
-        catch (e1: IOException) {
-            e1.printStackTrace()
-                }
-
-        return ""
-           }
-*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == IMAGE_PICK_CODE)
@@ -194,14 +156,6 @@ class Admin_Add_Category : AppCompatActivity() {
                 added_image.setImageBitmap(BitmapFactory.decodeFile(mediaPath))
                 cursor.close()
                 Log.e("sample", "Path: " + mediaPath)
-
-                /*try {
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
-                    val path = saveImage(bitmap)
-                            } catch (e: IOException) {
-                    e.printStackTrace()
-                    Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show()
-                            }*/
                         }
                     }
                 }

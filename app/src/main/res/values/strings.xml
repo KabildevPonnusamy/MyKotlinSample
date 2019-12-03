@@ -19,4 +19,15 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="create_category">Create Category</string>
     <string name="items_list">Items List</string>
+    <string name="itemprice">Item price</string>
+    <string name="create_item">Create Item</string>
+    <string name="offerprice">Offer price</string>
+
+    <string name="enter_item_name">Please enter Item name</string>
+    <string name="enter_price_valid_dollor">Please enter valid price</string>
+    <string name="enter_price_dollor">Please enter price dollor</string>
+    <string name="enter_price_cents">Please enter price cents</string>
+    <string name="enter_offer_dollor">Please enter offer dollor</string>
+    <string name="enter_offer_cents">Please enter offer cents</string>
+
 </resources>

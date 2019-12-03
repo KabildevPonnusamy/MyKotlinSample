@@ -58,6 +58,8 @@ class CategoryFragment : Fragment() {
                 var catestatus: String? = categorylist[position].cate_show_status
                 var cateimg: String? = categorylist[position].cate_img
 
+                Log.e("sample", "CateId: " + cateid)
+
                 val intent = Intent (context, ItemsList::class.java)
                 intent.putExtra("cateid", cateid)
                 intent.putExtra("catename","" + catename)
@@ -74,7 +76,6 @@ class CategoryFragment : Fragment() {
                 var catename: String? = categorylist[position].cate_name
                 Log.e("sample", "LongClick: " + cateid);
                 delete_category(cateid, catename)
-
                         }
                     }))
 

@@ -232,11 +232,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
         return db.update(CATEGORY_TABLE, values, "$CATE_ID=?", arrayOf(cate_id))
             }
 
+    /******************************  Items  ********************************************/
     /*Add Items*/
-    fun addItems (item_name: String, item_image: String, item_price: String, item_ofr_price: String,
+    fun addItems (cate_id: String, item_name: String, item_image: String, item_price: String, item_ofr_price: String,
                   item_status: String, item_created_date: String) {
         val db = this.writableDatabase
         val values = ContentValues()
+        values.put(ITEM_CATE_ID, cate_id)
         values.put(ITEM_NAME, item_name)
         values.put(ITEM_IMAGE, item_image)
         values.put(ITEM_PRICE, item_price)
@@ -268,9 +270,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
             }
 
     /*Get Items List*/
-    fun getAllItems():List<ItemDatasList> {
+    fun getAllItems(cate_id: String):List<ItemDatasList> {
         val myitems = ArrayList<ItemDatasList>()
-        val selectQuery = "SELECT * FROM $ITEM_TABLE where $ITEM_SHOWN_STATUS = '1'"
+        val selectQuery = "SELECT * FROM $ITEM_TABLE where $ITEM_SHOWN_STATUS = '1' and $ITEM_CATE_ID = $cate_id"
         val db = this.writableDatabase
         val cursor = db.rawQuery(selectQuery, null)
         if(cursor.moveToFirst()) {

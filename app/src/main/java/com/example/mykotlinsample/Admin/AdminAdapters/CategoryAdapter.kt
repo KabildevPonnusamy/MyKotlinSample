@@ -26,7 +26,7 @@ class CategoryAdapter(var context: Context, val catelist: ArrayList<CategoryList
                 }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent?.context).inflate(R.layout.category_item, parent, false)
+        val v = LayoutInflater.from(parent?.context).inflate(R.layout.admin_cate_item, parent, false)
         return ViewHolder(v)
                 }
 
