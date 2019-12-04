@@ -29,5 +29,8 @@
     <string name="enter_price_cents">Please enter price cents</string>
     <string name="enter_offer_dollor">Please enter offer dollor</string>
     <string name="enter_offer_cents">Please enter offer cents</string>
+    <string name="update_item">Update Item</string>
+    <string name="itemstatus">Show Status</string>
+    <string name="upd_item_title">Update Item</string>
 
 </resources>

@@ -56,8 +56,16 @@ class ItemsList : AppCompatActivity() {
                     override fun onItemLongClick(view: View?, position: Int) {
                         var itemid : Int = itemList[position].item_id
                         var itemname: String? = itemList[position].item_name
+                        var itemimage: String? = itemList[position].item_img
+                        var itemcateid: String? = itemList[position].cate_id
+                        var itemprice: String? = itemList[position].item_price
+                        var itemofrprice: String? = itemList[position].item_ofr_price
+                        var itemshownstatus: String? = itemList[position].item_shown_status
+                        var itemcreateddate: String? = itemList[position].item_created_date
+
                         Log.e("sample", "LongClkItm: " + itemname);
-                        delete_item(itemid, itemname)
+                        delete_item(itemid, itemname, itemimage, itemcateid, itemprice, itemofrprice,
+                            itemshownstatus, itemcreateddate)
                             }
                         })
                     )
@@ -71,29 +79,48 @@ class ItemsList : AppCompatActivity() {
             overridePendingTransition(
                 R.anim.slide_up,
                 R.anim.no_animation
-                        );
+                        )
                     }
 
         get_Items(item_recycleView)
                }
 
-    private fun delete_item(itemid: Int, itemname: String?) {
+    private fun delete_item(itemid: Int, itemname: String?, itemimage: String?, itemcateid: String?, itemprice: String?,
+                            itemofrprice: String?, itemshownstatus: String?, itemcreatedate: String?) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Delete $itemname")
-        builder.setMessage("Do you want to delete this item?")
+        builder.setTitle("Item $itemname")
+        builder.setMessage("Do you want to do operation?")
 
-        builder.setPositiveButton("Yes"){dialogInterface, which ->
+        builder.setPositiveButton("Delete"){dialogInterface, which ->
             dialogInterface.dismiss()
             db.deleteItems("" + itemid)
             db.close()
             get_Items(item_recycle)
                  }
-        builder.setNegativeButton("No"){dialogInterface, which ->
+
+        builder.setNegativeButton("Update"){dialogInterface, which ->
             dialogInterface.dismiss()
+            intent = Intent(applicationContext, Admin_Updated_Item::class.java)
+            intent.putExtra("cateid", cateid)
+
+            intent.putExtra("itemid", "" + itemid)
+            intent.putExtra("itemname", itemname)
+            intent.putExtra("itemimage", itemimage)
+            intent.putExtra("itemcateid", itemcateid)
+            intent.putExtra("itemprice", itemprice)
+            intent.putExtra("itemofrprice", itemofrprice)
+            intent.putExtra("itemshownstatus", itemshownstatus)
+            intent.putExtra("itemcreatedate", itemcreatedate)
+
+            startActivityForResult(intent, 5)
+            overridePendingTransition(
+                R.anim.slide_up,
+                R.anim.no_animation
+                    )
                  }
 
         val alertDialog: AlertDialog = builder.create()
-        alertDialog.setCancelable(false)
+//        alertDialog.setCancelable(false)
         alertDialog.show()
                 }
 

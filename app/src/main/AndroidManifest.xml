@@ -64,6 +64,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
+        <activity
+            android:name=".Admin.AdminActivities.Admin_Updated_Item"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat"/>
+
     </application>
 
 </manifest>
