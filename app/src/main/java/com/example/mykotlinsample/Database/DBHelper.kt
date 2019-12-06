@@ -250,8 +250,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
             }
 
     /*Update Items */
-    fun updateItems(item_name: String, item_image: String, item_price: String, item_ofr_price: String,
-                     item_status: String, item_id: String): Int {
+    fun updateItems(item_id: String, item_name: String, item_image: String, item_price: String,
+                    item_ofr_price: String, item_status: String): Int {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(ITEM_NAME, item_name)
@@ -273,6 +273,29 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
     fun getAllItems(cate_id: String):List<ItemDatasList> {
         val myitems = ArrayList<ItemDatasList>()
         val selectQuery = "SELECT * FROM $ITEM_TABLE where $ITEM_SHOWN_STATUS = '1' and $ITEM_CATE_ID = $cate_id"
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(selectQuery, null)
+        if(cursor.moveToFirst()) {
+            do {
+                val mydatas = ItemDatasList()
+                mydatas.item_id = cursor.getInt(cursor.getColumnIndex(ITEM_ID))
+                mydatas.cate_id = cursor.getString(cursor.getColumnIndex(ITEM_CATE_ID))
+                mydatas.item_name = cursor.getString(cursor.getColumnIndex(ITEM_NAME))
+                mydatas.item_img = cursor.getString(cursor.getColumnIndex(ITEM_IMAGE))
+                mydatas.item_price = cursor.getString(cursor.getColumnIndex(ITEM_PRICE))
+                mydatas.item_ofr_price = cursor.getString(cursor.getColumnIndex(ITEM_OFFER_PRICE))
+                mydatas.item_shown_status = cursor.getString(cursor.getColumnIndex(ITEM_SHOWN_STATUS))
+                mydatas.item_created_date = cursor.getString(cursor.getColumnIndex(ITEM_CREATED_DATE))
+                myitems.add(mydatas)
+            } while (cursor.moveToNext())
+        }
+        return myitems
+    }
+
+    /*Get Items List*/
+    fun getHidenItems(cate_id: String):List<ItemDatasList> {
+        val myitems = ArrayList<ItemDatasList>()
+        val selectQuery = "SELECT * FROM $ITEM_TABLE where $ITEM_SHOWN_STATUS = '0' and $ITEM_CATE_ID = $cate_id"
         val db = this.writableDatabase
         val cursor = db.rawQuery(selectQuery, null)
         if(cursor.moveToFirst()) {

@@ -18,10 +18,11 @@ import com.example.mykotlinsample.Admin.AdminModels.ItemDatasList
 import com.example.mykotlinsample.Admin.AdminSupportClasses.RecyclerItemClickListenr
 import com.example.mykotlinsample.Database.DBHelper
 import com.example.mykotlinsample.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.admin_fragcategory.*
 import kotlinx.android.synthetic.main.admin_itemsact.*
 
-class ItemsList : AppCompatActivity() {
+class ItemsList : AppCompatActivity() , View.OnClickListener {
 
     internal lateinit var db: DBHelper
     var itemList: ArrayList<ItemDatasList> = ArrayList<ItemDatasList>()
@@ -42,6 +43,9 @@ class ItemsList : AppCompatActivity() {
         val arrow_back: ImageView = findViewById<ImageView>(R.id.arrow_back)
         val item_name: TextView = findViewById<TextView>(R.id.item_name)
         val item_image: ImageView = findViewById<ImageView>(R.id.item_image)
+        var fab: FloatingActionButton = findViewById(R.id.fab)
+        fab.setOnClickListener(this)
+
         arrow_back.setOnClickListener {
           onBackPressed()
             }
@@ -139,7 +143,7 @@ class ItemsList : AppCompatActivity() {
         itemList = db.getAllItems("" + cateid) as ArrayList<ItemDatasList>
         db.close()
 
-        itemRecycleview.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        itemRecycleview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val adapter = ItemsAdapter(applicationContext, itemList)
         itemRecycleview.adapter = adapter
             }
@@ -151,6 +155,12 @@ class ItemsList : AppCompatActivity() {
                 get_Items(item_recycle)
                     }
                 }
+
+        if(requestCode == 5) {
+            if(resultCode == 6) {
+                get_Items(item_recycle)
+                    }
+                }
             }
 
     override fun onBackPressed() {
@@ -158,4 +168,14 @@ class ItemsList : AppCompatActivity() {
         finish()
         overridePendingTransition( R.anim.no_animation, R.anim.slide_down);
             }
-        }
+
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            R.id.fab -> show_hidden_items(v)
+                }
+            }
+
+    private fun show_hidden_items(v: View) {
+
+                }
+}
