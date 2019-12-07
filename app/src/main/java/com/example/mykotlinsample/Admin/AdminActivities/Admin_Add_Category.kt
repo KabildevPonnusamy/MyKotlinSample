@@ -37,7 +37,6 @@ import java.util.jar.Manifest
 
 class Admin_Add_Category : AppCompatActivity() {
 
-
     internal lateinit var db: DBHelper
     private var mediaPath: String? = null
 

@@ -253,11 +253,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textStyle="normal"
-                android:textSize="18sp"
                 android:fontFamily="@font/firefans_regular"
-                android:text="@string/itemstatus"/>
+                android:text="@string/itemstatus"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="normal" />
 
             <ToggleButton
                 android:id="@+id/status_toggle"

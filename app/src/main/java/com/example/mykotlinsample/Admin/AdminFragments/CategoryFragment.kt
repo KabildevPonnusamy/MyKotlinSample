@@ -8,13 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mykotlinsample.Admin.AdminActivities.Admin_Add_Category
-import com.example.mykotlinsample.Admin.AdminActivities.ItemsList
+import com.example.mykotlinsample.Admin.AdminActivities.Admin_ItemsList
+import com.example.mykotlinsample.Admin.AdminActivities.Admin_UpdatedCategory
 import com.example.mykotlinsample.Admin.AdminAdapters.CategoryAdapter
 import com.example.mykotlinsample.Admin.AdminModels.CategoryList
 import com.example.mykotlinsample.Admin.AdminSupportClasses.RecyclerItemClickListenr
@@ -60,7 +59,7 @@ class CategoryFragment : Fragment() {
 
                 Log.e("sample", "CateId: " + cateid)
 
-                val intent = Intent (context, ItemsList::class.java)
+                val intent = Intent (context, Admin_ItemsList::class.java)
                 intent.putExtra("cateid", cateid)
                 intent.putExtra("catename","" + catename)
                 intent.putExtra("catestatus","" + catestatus)
@@ -69,13 +68,10 @@ class CategoryFragment : Fragment() {
                 requireActivity().overridePendingTransition(
                     R.anim.slide_up,
                     R.anim.no_animation
-                            );
+                            )
                         }
             override fun onItemLongClick(view: View?, position: Int) {
-                var cateid : Int = categorylist[position].cate_id
-                var catename: String? = categorylist[position].cate_name
-                Log.e("sample", "LongClick: " + cateid);
-                delete_category(cateid, catename)
+                delete_category(position)
                         }
                     }))
 
@@ -91,20 +87,34 @@ class CategoryFragment : Fragment() {
         return view
            }
 
-    private fun delete_category(cateid: Int, catename:String?) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Delete $catename")
-        builder.setMessage("Do you want to delete this cateory?")
+    private fun delete_category(position: Int) {
+        var cateid : Int = categorylist[position].cate_id
+        var catename: String? = categorylist[position].cate_name
+        var catestatus: String? = categorylist[position].cate_show_status
+        var cateimg: String? = categorylist[position].cate_img
 
-        builder.setPositiveButton("Yes"){dialogInterface, which ->
+        Log.e("sample", "LongClick: " + cateid);
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Category $catename")
+        builder.setMessage("Do you want to do operation?")
+
+        builder.setPositiveButton("Delete"){dialogInterface, which ->
             dialogInterface.dismiss()
             db.deleteCategory("" + cateid)
             db.close()
             get_categories(caterecycle)
                 }
-        builder.setNegativeButton("No"){dialogInterface, which ->
+        builder.setNegativeButton("Update"){dialogInterface, which ->
             dialogInterface.dismiss()
-                }
+            val intent = Intent(context, Admin_UpdatedCategory::class.java)
+            intent.putExtra("cateid",cateid)
+            intent.putExtra("catename",catename)
+            intent.putExtra("catestatus",catestatus)
+            intent.putExtra("cateimg",cateimg)
+            startActivityForResult(intent, 9)
+            requireActivity().overridePendingTransition(R.anim.slide_up, R.anim.no_animation)
+                    }
 
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)

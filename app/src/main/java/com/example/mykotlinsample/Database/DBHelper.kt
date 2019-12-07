@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.mykotlinsample.Admin.AdminActivities.ItemsList
 import com.example.mykotlinsample.Admin.AdminModels.CategoryList
 import com.example.mykotlinsample.Admin.AdminModels.ItemDatasList
 import com.example.mykotlinsample.Common.CommonModels.ProfileDatas
@@ -314,5 +313,12 @@ class DBHelper(context: Context) : SQLiteOpenHelper (context, DATABASE_NAME, nul
         }
         return myitems
     }
+
+    fun updateShownItems(item_id: String, item_status: String): Int {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(ITEM_SHOWN_STATUS, item_status)
+        return db.update(ITEM_TABLE, values, "$ITEM_ID=?", arrayOf(item_id))
+                    }
 
 }

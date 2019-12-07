@@ -1,6 +1,9 @@
 package com.example.mykotlinsample.Admin.AdminModels
 
-class ItemDatasList {
+import android.os.Parcel
+import android.os.Parcelable
+
+class ItemDatasList() : Parcelable {
 
     var item_id: Int = 0
     var cate_id: String? = null
@@ -11,17 +14,50 @@ class ItemDatasList {
     var item_shown_status: String? = null
     var item_created_date: String? = null
 
-    constructor()
-
-    constructor(item_id: Int, cate_id: String, item_nme: String, item_img: String, item_price: String,
-                item_ofr_price:String, item_shown_status: String, item_created_date:String) {
-        this.item_id = item_id
-        this.cate_id = cate_id
-        this.item_name = item_name
-        this.item_img = item_img
-        this.item_price = item_price
-        this.item_ofr_price = item_ofr_price
-        this.item_shown_status = item_shown_status
-        this.item_created_date = item_created_date
+    constructor(parcel: Parcel) : this() {
+        item_id = parcel.readInt()
+        cate_id = parcel.readString()
+        item_name = parcel.readString()
+        item_img = parcel.readString()
+        item_price = parcel.readString()
+        item_ofr_price = parcel.readString()
+        item_shown_status = parcel.readString()
+        item_created_date = parcel.readString()
                 }
+
+    private fun readFromParcel(parcel: Parcel){
+        item_id = parcel.readInt()
+        cate_id = parcel.readString()
+        item_name = parcel.readString()
+        item_img = parcel.readString()
+        item_price = parcel.readString()
+        item_ofr_price = parcel.readString()
+        item_shown_status = parcel.readString()
+        item_created_date = parcel.readString()
+            }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(item_id)
+        parcel.writeString(cate_id)
+        parcel.writeString(item_name)
+        parcel.writeString(item_img)
+        parcel.writeString(item_price)
+        parcel.writeString(item_ofr_price)
+        parcel.writeString(item_shown_status)
+        parcel.writeString(item_created_date)
+                }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ItemDatasList> {
+        override fun createFromParcel(parcel: Parcel): ItemDatasList {
+            return ItemDatasList(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ItemDatasList?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

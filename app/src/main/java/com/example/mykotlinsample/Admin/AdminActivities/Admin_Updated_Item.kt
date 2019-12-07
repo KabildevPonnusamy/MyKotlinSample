@@ -61,7 +61,6 @@ class Admin_Updated_Item : AppCompatActivity(), View.OnClickListener {
         var status_toggle: ToggleButton = findViewById(R.id.status_toggle)
         var update_item_btn: Button = findViewById(R.id.update_item_btn)
 
-
         upditem_back.setOnClickListener(this)
         update_item_btn.setOnClickListener(this)
         upd_image.setOnClickListener(this)
@@ -105,7 +104,7 @@ class Admin_Updated_Item : AppCompatActivity(), View.OnClickListener {
                     itemshownstatus = "0"
                         }
                     })
-                }
+               }
 
     private fun get_Intents() {
         itemid = intent.getStringExtra("itemid")
@@ -237,6 +236,7 @@ class Admin_Updated_Item : AppCompatActivity(), View.OnClickListener {
 
         setResult(6)
         finish()
+        overridePendingTransition( R.anim.no_animation, R.anim.slide_down);
 
             }
 

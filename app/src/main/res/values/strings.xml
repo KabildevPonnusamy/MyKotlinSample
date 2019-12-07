@@ -32,5 +32,6 @@
     <string name="update_item">Update Item</string>
     <string name="itemstatus">Show Status</string>
     <string name="upd_item_title">Update Item</string>
+    <string name="update_category">Update Category</string>
 
 </resources>

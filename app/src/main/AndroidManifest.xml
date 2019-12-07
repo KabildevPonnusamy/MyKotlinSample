@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
 
@@ -55,7 +55,7 @@
             android:theme="@style/Theme.AppCompat"/>
 
         <activity
-            android:name=".Admin.AdminActivities.ItemsList"
+            android:name=".Admin.AdminActivities.Admin_ItemsList"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 
@@ -66,6 +66,16 @@
 
         <activity
             android:name=".Admin.AdminActivities.Admin_Updated_Item"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat"/>
+
+        <activity
+            android:name=".Admin.AdminActivities.Admin_HiddenItems"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat"/>
+
+        <activity
+            android:name=".Admin.AdminActivities.Admin_UpdatedCategory"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat"/>
 

@@ -1,5 +1,6 @@
 package com.example.mykotlinsample.Admin.AdminActivities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -22,10 +23,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.admin_fragcategory.*
 import kotlinx.android.synthetic.main.admin_itemsact.*
 
-class ItemsList : AppCompatActivity() , View.OnClickListener {
+class Admin_ItemsList : AppCompatActivity() , View.OnClickListener {
 
     internal lateinit var db: DBHelper
     var itemList: ArrayList<ItemDatasList> = ArrayList<ItemDatasList>()
+    var hiddenitemList: ArrayList<ItemDatasList> = ArrayList<ItemDatasList>()
 
     var cateid: Int? = null
     var catename: String? = null
@@ -38,20 +40,10 @@ class ItemsList : AppCompatActivity() , View.OnClickListener {
         supportActionBar ?.hide()
 
         db = DBHelper(applicationContext)
-        val item_recycleView = findViewById<RecyclerView>(R.id.item_recycle) as RecyclerView
-        val add_items: ImageView = findViewById<ImageView>(R.id.add_items)
-        val arrow_back: ImageView = findViewById<ImageView>(R.id.arrow_back)
-        val item_name: TextView = findViewById<TextView>(R.id.item_name)
-        val item_image: ImageView = findViewById<ImageView>(R.id.item_image)
-        var fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener(this)
+        init_values()
 
-        arrow_back.setOnClickListener {
-          onBackPressed()
-            }
-
-        item_recycleView.addOnItemTouchListener(
-            RecyclerItemClickListenr(this, item_recycleView,
+        item_recycle.addOnItemTouchListener(
+            RecyclerItemClickListenr(this, item_recycle,
                 object : RecyclerItemClickListenr.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
 
@@ -76,18 +68,21 @@ class ItemsList : AppCompatActivity() , View.OnClickListener {
 
         get_intents()
 
-        add_items.setOnClickListener {
-            intent = Intent(applicationContext, Admin_Add_Items::class.java)
-            intent.putExtra("cateid", cateid)
-            startActivityForResult(intent, 3)
-            overridePendingTransition(
-                R.anim.slide_up,
-                R.anim.no_animation
-                        )
-                    }
+        add_items.setOnClickListener(this)
+        fab.setOnClickListener(this)
+        arrow_back.setOnClickListener(this)
 
-        get_Items(item_recycleView)
+        get_Items(item_recycle)
                }
+
+    private fun init_values() {
+        val item_recycleView = findViewById<RecyclerView>(R.id.item_recycle)
+        val add_items: ImageView = findViewById<ImageView>(R.id.add_items)
+        val arrow_back: ImageView = findViewById<ImageView>(R.id.arrow_back)
+        val item_name: TextView = findViewById<TextView>(R.id.item_name)
+        val item_image: ImageView = findViewById<ImageView>(R.id.item_image)
+        var fab: FloatingActionButton = findViewById(R.id.fab)
+                }
 
     private fun delete_item(itemid: Int, itemname: String?, itemimage: String?, itemcateid: String?, itemprice: String?,
                             itemofrprice: String?, itemshownstatus: String?, itemcreatedate: String?) {
@@ -124,7 +119,6 @@ class ItemsList : AppCompatActivity() , View.OnClickListener {
                  }
 
         val alertDialog: AlertDialog = builder.create()
-//        alertDialog.setCancelable(false)
         alertDialog.show()
                 }
 
@@ -136,6 +130,8 @@ class ItemsList : AppCompatActivity() , View.OnClickListener {
         item_name.setText(catename)
         val bitmap: Bitmap = BitmapFactory.decodeFile(cateimage)
         item_image!!.setImageBitmap(bitmap)
+
+        show_hidden_items()
                }
 
     private fun get_Items(itemRecycleview: RecyclerView) {
@@ -146,19 +142,28 @@ class ItemsList : AppCompatActivity() , View.OnClickListener {
         itemRecycleview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val adapter = ItemsAdapter(applicationContext, itemList)
         itemRecycleview.adapter = adapter
-            }
+                }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == 3) {
             if(resultCode == 4) {
                 Log.e("sample", "Callback Done");
                 get_Items(item_recycle)
+                show_hidden_items()
                     }
                 }
 
         if(requestCode == 5) {
             if(resultCode == 6) {
                 get_Items(item_recycle)
+                show_hidden_items()
+                    }
+                }
+
+        if(requestCode == 7) {
+            if(resultCode == 8) {
+                get_Items(item_recycle)
+                show_hidden_items()
                     }
                 }
             }
@@ -171,11 +176,42 @@ class ItemsList : AppCompatActivity() , View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.fab -> show_hidden_items(v)
+            R.id.fab -> move_hidden_items()
+            R.id.add_items -> move_to_add_items()
+            R.id.arrow_back -> onBackPressed()
                 }
             }
 
-    private fun show_hidden_items(v: View) {
-
+    private fun move_to_add_items() {
+        intent = Intent(applicationContext, Admin_Add_Items::class.java)
+        intent.putExtra("cateid", cateid)
+        startActivityForResult(intent, 3)
+        overridePendingTransition(
+            R.anim.slide_up,
+            R.anim.no_animation
+                    )
                 }
+
+    private fun move_hidden_items() {
+        intent = Intent(this, Admin_HiddenItems::class.java)
+        intent.putParcelableArrayListExtra("hiddenItems", hiddenitemList)
+        intent.putExtra("cateid", cateid)
+        startActivityForResult(intent, 7)
+        overridePendingTransition(
+            R.anim.slide_up,
+            R.anim.no_animation
+                    )
+            }
+
+    private fun show_hidden_items() {
+        hiddenitemList.clear()
+        hiddenitemList = db.getHidenItems("" + cateid) as ArrayList<ItemDatasList>
+        db.close()
+
+        if(hiddenitemList.size > 0) {
+            fab.show()
+                  } else {
+            fab.hide()
+                }
+            }
 }
