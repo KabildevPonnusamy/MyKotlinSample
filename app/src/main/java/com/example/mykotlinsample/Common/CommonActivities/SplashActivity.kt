@@ -8,7 +8,7 @@ import android.os.Handler
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mykotlinsample.Admin.AdminActivities.Dashboard
+import com.example.mykotlinsample.Admin.AdminActivities.`Admin_\Dashboard`
 import com.example.mykotlinsample.R
 
 class SplashActivity : AppCompatActivity() {
@@ -28,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Already Logged in", Toast.LENGTH_SHORT).show()
 
             Handler().postDelayed({
-                intent = Intent(applicationContext, Dashboard::class.java)
+                intent = Intent(applicationContext, `Admin_\Dashboard`::class.java)
                 startActivity(intent)
 
                 overridePendingTransition(

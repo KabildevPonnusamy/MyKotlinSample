@@ -1,6 +1,9 @@
 package com.example.mykotlinsample.Admin.AdminModels
 
-class CategoryList {
+import android.os.Parcel
+import android.os.Parcelable
+
+class CategoryList(): Parcelable {
 
     var cate_id: Int = 0
     var cate_name: String? = null
@@ -8,14 +11,41 @@ class CategoryList {
     var cate_show_status: String? = null
     var cate_created: String? = null
 
-    constructor()
-
-    constructor(cate_id: Int, cate_name:String, cate_img: String, cate_show_statu: String,
-                cate_created: String) {
-        this.cate_id = cate_id
-        this.cate_name = cate_name
-        this.cate_img = cate_img
-        this.cate_show_status = cate_show_status
-        this.cate_created = cate_created
+    constructor(parcel: Parcel) : this() {
+        cate_id = parcel.readInt()
+        cate_name = parcel.readString()
+        cate_img = parcel.readString()
+        cate_show_status = parcel.readString()
+        cate_created = parcel.readString()
             }
+
+    private fun readFromParcel(parcel: Parcel){
+        cate_id = parcel.readInt()
+        cate_name = parcel.readString()
+        cate_img= parcel.readString()
+        cate_show_status = parcel.readString()
+        cate_created = parcel.readString()
+                }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(cate_id)
+        parcel.writeString(cate_name)
+        parcel.writeString(cate_img)
+        parcel.writeString(cate_show_status)
+        parcel.writeString(cate_created)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<CategoryList> {
+        override fun createFromParcel(parcel: Parcel): CategoryList {
+            return CategoryList(parcel)
+        }
+
+        override fun newArray(size: Int): Array<CategoryList?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

@@ -23,12 +23,13 @@
                 android:gravity="center"
                 android:layout_centerInParent="true"
                 android:textStyle="bold"
-                android:layout_toLeftOf="@+id/logout"
+
                 android:textColor="@color/white"
                 android:fontFamily="@font/firefans_regular"
                 android:textSize="16sp"/>
 
-            <ImageView
+            <!--<ImageView
+            android:layout_toLeftOf="@+id/logout"
                 android:id="@+id/logout"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
@@ -36,7 +37,7 @@
                 android:layout_centerInParent="true"
                 android:src="@drawable/icon_logout"
                 android:tint="@color/white"
-                android:padding="15dp"/>
+                android:padding="15dp"/>-->
 
         </RelativeLayout>
 

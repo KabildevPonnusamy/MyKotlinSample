@@ -12,7 +12,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mykotlinsample.Admin.AdminActivities.Dashboard
+import com.example.mykotlinsample.Admin.AdminActivities.`Admin_\Dashboard`
 import com.example.mykotlinsample.Database.DBHelper
 import com.example.mykotlinsample.Common.CommonModels.ProfileDatas
 import com.example.mykotlinsample.R
@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
                 editor.apply()
                 editor.commit()
 
-                intent = Intent(this, Dashboard::class.java)
+                intent = Intent(this, `Admin_\Dashboard`::class.java)
                 startActivity(intent)
                 overridePendingTransition(
                     R.anim.slide_up,

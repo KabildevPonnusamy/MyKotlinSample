@@ -7,21 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mykotlinsample.Admin.AdminActivities.Admin_Add_Category
-import com.example.mykotlinsample.Admin.AdminActivities.Admin_ItemsList
-import com.example.mykotlinsample.Admin.AdminActivities.Admin_UpdatedCategory
+import com.example.mykotlinsample.Admin.AdminActivities.*
 import com.example.mykotlinsample.Admin.AdminAdapters.CategoryAdapter
 import com.example.mykotlinsample.Admin.AdminModels.CategoryList
 import com.example.mykotlinsample.Admin.AdminSupportClasses.RecyclerItemClickListenr
 import com.example.mykotlinsample.Database.DBHelper
 import com.example.mykotlinsample.R
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.admin_fragcategory.*
 
-class CategoryFragment : Fragment() {
+class CategoryFragment : Fragment(), View.OnClickListener {
 
     var categorylist: ArrayList<CategoryList> = ArrayList<CategoryList>()
     internal lateinit var db: DBHelper
@@ -33,16 +33,19 @@ class CategoryFragment : Fragment() {
         db = DBHelper(requireContext())
 
         val icon_add = view.findViewById<ImageView>(R.id.icon_add)
+        var icon_hidden_cate = view.findViewById<ImageView>(R.id.icon_hidden_cate)
+        var bottom_layout = view.findViewById<LinearLayout>(R.id.bottom_layout)
         var recyclerView: RecyclerView = view.findViewById(R.id.caterecycle) as RecyclerView
-
+        icon_hidden_cate.setOnClickListener(this)
+        icon_add.setOnClickListener(this)
         get_categories(recyclerView)
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if(dy > 0) {
-                    icon_add.visibility = View.INVISIBLE
+                    bottom_layout.visibility = View.GONE
                          } else {
-                    icon_add.visibility = View.VISIBLE
+                    bottom_layout.visibility = View.VISIBLE
                         }
                 super.onScrolled(recyclerView, dx, dy)
                         }
@@ -75,15 +78,6 @@ class CategoryFragment : Fragment() {
                         }
                     }))
 
-        icon_add.setOnClickListener {
-            activity!!.intent = Intent(activity, Admin_Add_Category::class.java)
-            startActivityForResult(activity!!.intent, 0)
-            requireActivity().overridePendingTransition(
-                R.anim.slide_up,
-                R.anim.no_animation
-                    );
-                }
-
         return view
            }
 
@@ -105,7 +99,7 @@ class CategoryFragment : Fragment() {
             db.close()
             get_categories(caterecycle)
                 }
-        builder.setNegativeButton("Update"){dialogInterface, which ->
+        builder.setNegativeButton("Edit"){dialogInterface, which ->
             dialogInterface.dismiss()
             val intent = Intent(context, Admin_UpdatedCategory::class.java)
             intent.putExtra("cateid",cateid)
@@ -140,5 +134,51 @@ class CategoryFragment : Fragment() {
                 get_categories(caterecycle)
                         }
                     }
+
+        if(requestCode == 9) {
+            if(resultCode == 10) {
+                get_categories(caterecycle)
+                        }
+                    }
+
+        if(requestCode == 11) {
+            if(resultCode == 12) {
+                get_categories(caterecycle)
+                        }
+                    }
                 }
-    }
+
+    override fun onClick(v: View?) {
+        when(v!!.id) {
+            R.id.icon_hidden_cate -> get_hidded_categories(v)
+            R.id.icon_add -> add_category(v)
+                }
+            }
+
+    private fun add_category(v: View) {
+        activity!!.intent = Intent(activity, Admin_Add_Category::class.java)
+        startActivityForResult(activity!!.intent, 0)
+        requireActivity().overridePendingTransition(
+            R.anim.slide_up,
+            R.anim.no_animation
+                    )
+                }
+
+    private fun get_hidded_categories(v: View) {
+        var hiddencategorylist: ArrayList<CategoryList> = ArrayList<CategoryList>()
+        hiddencategorylist.clear()
+        hiddencategorylist = db.getHiddenCategories() as ArrayList<CategoryList>
+        db.close()
+
+        if(hiddencategorylist.size > 0) {
+            var intent = Intent(context, Admin_HiddenCategories::class.java)
+            intent.putParcelableArrayListExtra("hiddenCates", hiddencategorylist)
+            startActivityForResult(intent, 11)
+            requireActivity().overridePendingTransition( R.anim.slide_up, R.anim.no_animation )
+                } else {
+            Snackbar.make(v, "No hidden categories found", Snackbar.LENGTH_LONG)
+                .show()
+            return
+                }
+            }
+}

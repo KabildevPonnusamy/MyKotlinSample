@@ -76,6 +76,14 @@ class Admin_UpdatedCategory : AppCompatActivity(), View.OnClickListener {
         updcate_back.setOnClickListener(this)
         upd_add_image.setOnClickListener(this)
         update_cate_btn.setOnClickListener(this)
+        cate_status.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener {
+                buttonView, isChecked ->
+            if(isChecked) {
+                catestatus = "1"
+                  } else {
+                catestatus = "0"
+                    }
+                })
             }
 
     override fun onClick(v: View?) {
@@ -94,6 +102,13 @@ class Admin_UpdatedCategory : AppCompatActivity(), View.OnClickListener {
                 .show()
             return
                 }
+
+        db.updateCategory("" + catename, cateimg!!, catestatus!!,cateid.toString())
+        db.close()
+
+        setResult(10)
+        finish()
+        overridePendingTransition( R.anim.no_animation, R.anim.slide_down);
             }
 
     private fun get_image() {

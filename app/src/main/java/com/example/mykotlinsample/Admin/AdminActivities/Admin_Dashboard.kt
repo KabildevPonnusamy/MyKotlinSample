@@ -20,9 +20,10 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.admin_dashboard.*
 import kotlinx.android.synthetic.main.admin_appbarmain.*
 
-class Dashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class Admin_Dashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val sharedPrefFile = "coffee_preference"
+    var editor: SharedPreferences.Editor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +31,7 @@ class Dashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         supportActionBar ?.hide()
 
         var sharedPref: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-        var editor: SharedPreferences.Editor = sharedPref.edit()
+        editor = sharedPref.edit()
 
         val toggle = ActionBarDrawerToggle(this,  drawer_layout, toolbar,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -45,13 +46,6 @@ class Dashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
         toggle.syncState()
         navigationView.setNavigationItemSelectedListener(this)
         displayScreen(-1)
-
-        val logout = findViewById<ImageView>(R.id.logout)
-        logout.setOnClickListener {
-            editor.clear()
-            editor.commit()
-            finish()
-               }
            }
 
     fun displayScreen(id: Int) {
@@ -67,6 +61,12 @@ class Dashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedLi
 
             R.id.action_order_is -> {
                 SecondFragment()
+                    }
+            R.id.action_logout -> {
+                editor!!.clear()
+                editor!!.commit()
+                finish()
+                return
                     }
 
             else -> {

@@ -97,7 +97,7 @@ class Admin_ItemsList : AppCompatActivity() , View.OnClickListener {
             get_Items(item_recycle)
                  }
 
-        builder.setNegativeButton("Update"){dialogInterface, which ->
+        builder.setNegativeButton("Edit"){dialogInterface, which ->
             dialogInterface.dismiss()
             intent = Intent(applicationContext, Admin_Updated_Item::class.java)
             intent.putExtra("cateid", cateid)

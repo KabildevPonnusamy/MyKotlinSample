@@ -21,4 +21,10 @@
         android:icon="@drawable/icon_order_his"
         />
 
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:icon="@drawable/icon_logout"
+        />
+
 </menu>
