@@ -23,6 +23,8 @@
     <string name="create_item">Create Item</string>
     <string name="offerprice">Offer price</string>
 
+    <string name="please_enter">Please enter</string>
+    <string name="please_select_an">Please select an</string>
     <string name="enter_item_name">Please enter Item name</string>
     <string name="enter_price_valid_dollor">Please enter valid price</string>
     <string name="enter_price_dollor">Please enter price dollor</string>
@@ -33,5 +35,8 @@
     <string name="itemstatus">Show Status</string>
     <string name="upd_item_title">Update Item</string>
     <string name="update_category">Update Category</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

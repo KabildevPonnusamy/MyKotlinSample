@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bgnd_color"
-    tools:context=".Common.CommonActivities.RegisterActivity">
+    tools:context="com.tastycafe.mykotlinsample.Common.CommonActivities.RegisterActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

@@ -1,4 +1,4 @@
-package com.example.mykotlinsample
+package com.tastycafe.mykotlinsample
 
 import org.junit.Test
 
