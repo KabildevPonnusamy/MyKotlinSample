@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tastycafe.mykotlinsample.Admin.AdminAdapters.CategoryAdapter
-import com.tastycafe.mykotlinsample.Admin.AdminAdapters.HiddenCateAdapter
-import com.tastycafe.mykotlinsample.Admin.AdminAdapters.HiddenItemsAdapter
 import com.tastycafe.mykotlinsample.Admin.AdminModels.CategoryList
 import com.tastycafe.mykotlinsample.Admin.AdminSupportClasses.RecyclerItemClickListenr
 import com.tastycafe.mykotlinsample.Database.DBHelper
@@ -101,6 +99,6 @@ class Admin_HiddenCategories : AppCompatActivity(), View.OnClickListener {
     override fun onBackPressed() {
         setResult(12)
         finish()
-        overridePendingTransition( R.anim.no_animation, R.anim.slide_down);
+        overridePendingTransition( R.anim.no_animation, R.anim.slide_down)
             }
 }
